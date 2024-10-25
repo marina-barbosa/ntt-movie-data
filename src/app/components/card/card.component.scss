@@ -1,0 +1,66 @@
+@import '../../../styles.scss';
+
+.border-custom {
+  border-top-right-radius: 50px;
+}
+
+.position-custom {
+  top: 10px;
+  left: 17px;
+}
+
+.card-custom {
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.link-custom {
+  text-decoration: none;
+  color: $color-blue;
+
+  &:hover {
+    border-bottom: 1px solid $color-blue;
+  }
+}
+
+img {
+  height: 280px;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, $color-dark-blue10 50%, $color-dark-blue40 55%, $color-dark-blue 70%);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.fs-6 {
+  font-size: 0.8rem !important;
+}
+
+.medal {
+  font-size: 0.8rem;
+  font-weight: bold;
+  background-color: $color-yellow;
+  color: black;
+  width: fit-content;
+  height: 18px;
+  padding-inline: 0.5rem;
+  border-radius: 50px;
+}

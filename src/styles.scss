@@ -8,6 +8,8 @@
 // Cores primárias
 $color-blue: #19a3fc; // Azul claro para textos e botões
 $color-dark-blue: #070e27; // Azul escuro para cabeçalho e rodapé
+$color-dark-blue40: #070e274b; // Overlay
+$color-dark-blue10: #070e2710; // Overlay
 $color-yellow: #ffc400; // Amarelo para títulos, textos e botões
 
 // Cores neutras
@@ -24,3 +26,5 @@ $color-white: #f6f8fd; // Branco para fundo e texto
 .bg-custom {
   background-color: $color-dark-blue;
 }
+
+
