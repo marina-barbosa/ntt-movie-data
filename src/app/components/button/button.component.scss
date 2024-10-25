@@ -4,6 +4,7 @@
   border-radius: 50px; 
   border: 2px solid transparent; 
   font-weight: bold;
+  min-width: 120px;
 
   &.btn-primary {
     background-color: $color-blue;

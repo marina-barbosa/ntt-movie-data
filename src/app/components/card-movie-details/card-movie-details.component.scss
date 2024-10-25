@@ -1,0 +1,21 @@
+@import '../../../styles.scss';
+
+.text-yellow {
+  color: $color-yellow;
+}
+.bg-yellow {
+  background-color: $color-yellow;
+}
+.fit-content {
+  width: fit-content;
+}
+.custom-container {
+  max-width: 500px;
+}
+.img-custom {
+  max-height: 60vh;
+}
+section{
+  min-width: 95vw;
+  gap: 6%;
+}
