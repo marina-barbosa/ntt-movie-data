@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ButtonComponent } from "../button/button.component";
 import { RouterModule } from '@angular/router';
 
@@ -10,5 +10,9 @@ import { RouterModule } from '@angular/router';
   styleUrl: './card.component.scss'
 })
 export class CardComponent {
+  @Input() movie: any;
 
+  getMovieDetails(imdbID: string) {
+    // vou implementar depois
+  }
 }

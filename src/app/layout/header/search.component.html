@@ -2,9 +2,11 @@
   <div class="col-12 col-lg-4 mx-auto mb-3 mb-lg-0 d-flex bg-white rounded-pill">
     <input
       type="search"
+      [(ngModel)]="movieTitle"
+      name="movieTitle"
       class="form-control me-2 rounded-pill border-0"
       placeholder="O que está procurando?"
       aria-label="Search">
-    <app-button variant="warning" type="submit"  ariaLabel="Search">Buscar <i class="bi bi-search ms-1"></i></app-button>
+    <app-button variant="warning" (click)="searchMovie()"  ariaLabel="Search">Buscar <i class="bi bi-search ms-1"></i></app-button>
   </div>
 </form>
