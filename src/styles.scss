@@ -1,10 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
 
-// Estilo global
-* {
-  font-family: 'Noto Sans', sans-serif;
-}
+
 
 //// Paletas de cores ////
 
@@ -17,3 +14,13 @@ $color-yellow: #ffc400; // Amarelo para títulos, textos e botões
 $color-charcoal: #111521; // Carvão para fundo
 $color-gray: #212529; // Cinza para texto
 $color-white: #f6f8fd; // Branco para fundo e texto
+
+
+// Estilo global
+* {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+html, body {
+  background-color: $color-gray;
+}

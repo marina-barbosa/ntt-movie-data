@@ -1,1 +1,11 @@
-<p>button works!</p>
+<button
+  type="button"
+  [ngClass]="{
+    'btn': true,
+    'btn-primary': variant === 'primary',
+    'btn-warning': variant === 'warning',
+    'btn-custom': true
+  }"
+>
+  <ng-content></ng-content>
+</button>
