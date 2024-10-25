@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { OmdbService } from '../../services/api/omdb.service';
 import { MovieDataService } from '../../services/movie-data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -19,7 +20,7 @@ export class SearchComponent {
   selectedMovie: any = null;
   errorMessage: string = '';
 
-  constructor(private omdbService: OmdbService, private movieDataService: MovieDataService) { }
+  constructor(private omdbService: OmdbService, private movieDataService: MovieDataService, private router: Router) { }
 
   searchMovie(): void {
     const trimmedTitle = this.movieTitle.trim();
@@ -30,6 +31,9 @@ export class SearchComponent {
             //console.log(data);
             this.movieDataService.setMovies(data.Search);
             this.errorMessage = '';
+            if (this.router.url !== '/') {
+              this.router.navigate(['/']);
+            }
           } else {
             this.movieDataService.setMovies([]);
             this.errorMessage = 'Filme não encontrado!';

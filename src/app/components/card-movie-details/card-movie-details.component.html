@@ -1,16 +1,18 @@
-<section class="d-flex justify-content-center flex-column flex-lg-row">
+<section *ngIf="movie != undefined" class="d-flex justify-content-center flex-column flex-lg-row">
   <div class="mx-auto mx-lg-0 mt-5 mt-lg-0">
-    <img src="./got.png" class="img-custom rounded">
+    <img [src]="movie.Poster" class="img-custom rounded">
   </div>
   <div class="d-flex justify-content-center align-items-center">
     <div class="mx-auto custom-container p-5 p-lg-0">
-      <h1 class="fw-bold text-yellow">Game of Thrones</h1>
-      <p><strong>Year:</strong> 2011-2020 <span class="bg-yellow rounded px-2 mx-1">Ratings: TV-MA</span> Released: 17 Apr 2011</p>
-      <p class="rounded px-2 bg-secondary text-white fit-content"><strong>Genre:</strong> Action, Adventure, Drama</p>
-      <p><strong>Actors:</strong> Emilia Clarke, Peter Dinklage, Kit Harington</p>
-      <p><strong>Plot:</strong> Seven noble families fight for control of the mythical land of Westeros, while an ancient enemy returns after being dormant for thousands of years.</p>
-      <p class="text-yellow fst-italic"><strong>Language:</strong> English</p>
-      <p><i class="bi bi-award-fill text-yellow fs-5 me-2"></i>Won 59 Primetime Emmys. Another 17 wins & 49 nominations.</p>
+      <h1 class="fw-bold text-yellow">{{ movie.Title }}</h1>
+      <p><strong>Diretor:</strong> {{ movie.Director }}</p>
+      <p><strong>Year:</strong> {{ movie.Year }} <span class="bg-yellow rounded px-2 mx-1">IMDb Ratings:{{
+          movie.imdbRating }}</span> <strong>Released:</strong> {{ movie.Released }}</p>
+      <p class="rounded px-2 bg-secondary text-white fit-content"><strong>Genre:</strong> {{ movie.Genre }}</p>
+      <p><strong>Actors:</strong> {{ movie.Actors }}</p>
+      <p><strong>Plot:</strong> {{ movie.Plot }}</p>
+      <p class="text-yellow fst-italic"><strong>Language:</strong> {{ movie.Language }}</p>
+      <p><i class="bi bi-award-fill text-yellow fs-5 me-2"></i>{{ movie.Awards }}</p>      
       <div class="mt-5 d-flex justify-content-center gap-5 align-items-center">
         <app-button variant="primary">Favoritar <i class="bi bi-heart"></i></app-button>
         <app-button routerLink="/" variant="primary">Voltar</app-button>
@@ -18,3 +20,8 @@
     </div>
   </div>
 </section>
+
+<section *ngIf="movie.Plot == undefined" class="text-center">
+  <h2 class="text-danger">Detalhes do filme não disponíveis.</h2>
+</section>
+

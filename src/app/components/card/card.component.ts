@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ButtonComponent } from "../button/button.component";
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { OmdbService } from '../../services/api/omdb.service';
 
 @Component({
   selector: 'app-card',
@@ -12,7 +13,17 @@ import { RouterModule } from '@angular/router';
 export class CardComponent {
   @Input() movie: any;
 
+  constructor(private omdbService: OmdbService, private router: Router) { }
+
   getMovieDetails(imdbID: string) {
-    // vou implementar depois
+    this.omdbService.searchMovieDetails(imdbID).subscribe({
+      next: (movieDetails) => {
+        localStorage.setItem('movieDetails', JSON.stringify(movieDetails));
+        this.router.navigate(['/details']);
+      },
+      error: (err) => {
+        console.error('Error fetching movie details:', err);
+      }
+    });
   }
 }

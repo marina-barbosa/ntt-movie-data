@@ -10,6 +10,8 @@ import { CardMovieDetailsComponent } from "../../components/card-movie-details/c
   templateUrl: './movie-details-page.component.html',
   styleUrl: './movie-details-page.component.scss'
 })
+
+
 export class MovieDetailsPageComponent {
 
 }

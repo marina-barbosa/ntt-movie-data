@@ -18,7 +18,7 @@ export class CardGridComponent {
   ngOnInit(): void {
     this.movieDataService.movies$.subscribe((movies) => {
       this.movies = movies; 
-      console.log(this.movies);
+      // console.log(this.movies);
     });
   }
 }
