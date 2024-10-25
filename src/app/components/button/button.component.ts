@@ -10,4 +10,5 @@ import { Component, Input } from '@angular/core';
 })
 export class ButtonComponent {
   @Input() variant: 'primary' | 'warning' = 'primary';
+  @Input() ariaLabel: string = 'Botão de ação';
 }

@@ -1,11 +1,13 @@
-<button
-  type="button"
+<button 
+  type="button" 
   [ngClass]="{
     'btn': true,
     'btn-primary': variant === 'primary',
     'btn-warning': variant === 'warning',
     'btn-custom': true
-  }"
->
+  }" 
+  [attr.aria-label]="ariaLabel" 
+  role="button"
+  >
   <ng-content></ng-content>
 </button>
