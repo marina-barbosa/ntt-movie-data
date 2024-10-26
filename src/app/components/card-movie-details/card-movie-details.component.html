@@ -8,11 +8,11 @@
       <p><strong>Diretor:</strong> {{ movie.Director }}</p>
       <p><strong>Year:</strong> {{ movie.Year }} <span class="bg-yellow rounded px-2 mx-1">IMDb Ratings:{{
           movie.imdbRating }}</span> <strong>Released:</strong> {{ movie.Released }}</p>
-      <p class="rounded px-2 bg-secondary text-white fit-content"><strong>Genre:</strong> {{ movie.Genre }}</p>
+      <p class="rounded px-2 bg-secondary text-white fit-content"><strong>Genre:</strong> {{ translatedGenre || movie.Genre }}</p>
       <p><strong>Actors:</strong> {{ movie.Actors }}</p>
-      <p><strong>Plot:</strong> {{ movie.Plot }}</p>
-      <p class="text-yellow fst-italic"><strong>Language:</strong> {{ movie.Language }}</p>
-      <p><i class="bi bi-award-fill text-yellow fs-5 me-2"></i>{{ movie.Awards }}</p>      
+      <p><strong>Plot:</strong> {{ translatedPlot || movie.Plot }}</p>
+      <p class="text-yellow fst-italic"><strong>Language:</strong> {{ translatedLanguage || movie.Language }}</p>
+      <p><i class="bi bi-award-fill text-yellow fs-5 me-2"></i>{{ translatedAwards || movie.Awards }}</p>      
       <div class="mt-5 d-flex justify-content-center gap-5 align-items-center">
         <app-button variant="primary" (click)="addToFavorites()">Favoritar <i class="bi bi-heart"></i></app-button>
         <app-button routerLink="/" variant="primary">Voltar</app-button>

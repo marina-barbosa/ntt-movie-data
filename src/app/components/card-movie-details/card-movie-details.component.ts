@@ -4,8 +4,10 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MovieDataService } from '../../services/movie-data.service';
 import { FavoriteService } from '../../services/favorite.service';
+import { TranslationService } from '../../services/translation.service';
 
 export interface Movie {
+  imdbID: string;
   Title: string;
   Year: string;
   Director: string;
@@ -30,12 +32,17 @@ export interface Movie {
 
 
 export class CardMovieDetailsComponent implements OnInit {
-  movie: any;
+  movie: Movie | undefined;
   isVisible: boolean = false;
+  translatedPlot: string | undefined;
+  translatedAwards: string | undefined;
+  translatedGenre: string | undefined;
+  translatedLanguage: string | undefined;
 
   constructor(
     private movieDataService: MovieDataService,
-    private favoriteService: FavoriteService
+    private favoriteService: FavoriteService,
+    private translationService: TranslationService
   ) { }
 
   ngOnInit() {
@@ -45,7 +52,12 @@ export class CardMovieDetailsComponent implements OnInit {
 
     this.movieDataService.movieDetails$.subscribe((movieDetails) => {
       this.movie = movieDetails;
+      if (this.movie != undefined) {
+        this.translateText();
+      }
     });
+
+    this.translateText()
   }
 
   async addToFavorites() {
@@ -63,5 +75,49 @@ export class CardMovieDetailsComponent implements OnInit {
     }
   }
 
-  
+
+
+  translateText() {
+    if (this.movie) {
+      this.translationService.translate(this.movie.Plot).subscribe({
+        next: (response) => {
+          this.translatedPlot = response.responseData.translatedText;
+        },
+        error: (error) => {
+          console.error('Erro ao traduzir o Plot:', error);
+        }
+      });
+
+      this.translationService.translate(this.movie.Awards).subscribe({
+        next: (response) => {
+          this.translatedAwards = response.responseData.translatedText;
+        },
+        error: (error) => {
+          console.error('Erro ao traduzir os Awards:', error);
+        }
+      });
+
+      this.translationService.translate(this.movie.Genre).subscribe({
+        next: (response) => {
+          this.translatedGenre = response.responseData.translatedText;
+        },
+        error: (error) => {
+          console.error('Erro ao traduzir o Gênero:', error);
+        }
+      });
+
+      this.translationService.translate(this.movie.Language).subscribe({
+        next: (response) => {
+          this.translatedLanguage = response.responseData.translatedText;
+        },
+        error: (error) => {
+          console.error('Erro ao traduzir a Language:', error);
+        }
+      });
+    }
+  }
+
 }
+
+
+
