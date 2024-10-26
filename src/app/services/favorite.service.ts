@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore, doc, setDoc, arrayUnion, getDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, arrayUnion, getDoc, arrayRemove } from 'firebase/firestore';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -55,6 +55,31 @@ export class FavoriteService {
       const favorites = await this.getFavorites();
       localStorage.setItem('favorites', JSON.stringify(favorites));
       return favorites;
+    }
+  }
+
+  async removeFavorite(movieId: string) {
+    const user = this.auth.currentUser;
+    if (user) {
+      const userDoc = doc(this.db, 'users', user.uid);
+      const localFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+      const movieToRemove = localFavorites.find((movie: { id: string }) => movie.id === movieId);
+  
+      if (movieToRemove) {
+
+        await setDoc(userDoc, {
+          favorites: arrayRemove(movieToRemove)
+        }, { merge: true });
+        console.log("movie removed from favorites:", movieId);
+
+        const updatedFavorites = localFavorites.filter((movie: { id: string }) => movie.id !== movieId);
+        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      } else {
+        console.error('Filme não encontrado nos favoritos locais.');
+      }
+    } else {
+      console.error('Usuário não está autenticado.');
     }
   }
 

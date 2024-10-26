@@ -27,5 +27,10 @@ export class SidebarComponent implements OnInit {
   async onOpen() {
     await this.loadFavorites();
   }
-  
+
+  async removeFavorite(movieId: string) {
+    await this.favoriteService.removeFavorite(movieId);
+    await this.loadFavorites();
+  }
+
 }
