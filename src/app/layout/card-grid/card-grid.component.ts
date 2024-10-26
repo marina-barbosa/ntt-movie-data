@@ -33,7 +33,7 @@ export class CardGridComponent {
     setTimeout(() => {
       this.gridVisible = true; 
       this.showCards(); 
-    }, 300); 
+    }, 200); 
   }
 
   showCards() {
