@@ -15,14 +15,22 @@ export class FavoriteService {
     const user = this.auth.currentUser;
     if (user) {
       const userDoc = doc(this.db, 'users', user.uid);
-      await setDoc(userDoc, {
-        favorites: arrayUnion(movie)
-      }, { merge: true });
-      console.log("movie added to favorites:", movie);
+      const favorites = await this.getFavorites();
 
-      const localFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-      localFavorites.push(movie);
-      localStorage.setItem('favorites', JSON.stringify(localFavorites));
+      const movieExists = favorites.some((fav: { id: string }) => fav.id === movie.id);
+
+      if (!movieExists) {
+        await setDoc(userDoc, {
+          favorites: arrayUnion(movie)
+        }, { merge: true });
+        console.log("Filme adicionado aos favoritos:", movie);
+
+        const localFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        localFavorites.push(movie);
+        localStorage.setItem('favorites', JSON.stringify(localFavorites));
+      } else {
+        console.log("Filme já está nos favoritos:", movie);
+      }
     } else {
       console.error('Usuário não está autenticado.');
     }

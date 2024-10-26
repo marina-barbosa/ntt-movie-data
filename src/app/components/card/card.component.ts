@@ -3,6 +3,7 @@ import { ButtonComponent } from "../button/button.component";
 import { Router, RouterModule } from '@angular/router';
 import { OmdbService } from '../../services/api/omdb.service';
 import { MovieDataService } from '../../services/movie-data.service';
+import { FavoriteService } from '../../services/favorite.service';
 
 @Component({
   selector: 'app-card',
@@ -14,7 +15,7 @@ import { MovieDataService } from '../../services/movie-data.service';
 export class CardComponent {
   @Input() movie: any;
 
-  constructor(private omdbService: OmdbService, private router: Router, private movieDataService: MovieDataService) { }
+  constructor(private omdbService: OmdbService, private router: Router, private movieDataService: MovieDataService, private favoriteService: FavoriteService) { }
 
   getMovieDetails(imdbID: string) {
     this.omdbService.searchMovieDetails(imdbID).subscribe({
@@ -27,4 +28,20 @@ export class CardComponent {
       }
     });
   }
+
+  async addToFavorites() {
+    if (this.movie) {
+      try {
+        await this.favoriteService.addFavorite({
+          id: this.movie.imdbID,
+          title: this.movie.Title,
+          year: this.movie.Year
+        });
+        console.log('Filme adicionado aos favoritos:', this.movie.Title);
+      } catch (error) {
+        console.error('Erro ao adicionar aos favoritos:', error);
+      }
+    }
+  }
+
 }

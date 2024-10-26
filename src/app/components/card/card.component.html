@@ -1,13 +1,13 @@
 
 
-<div routerLink="/details" (click)="getMovieDetails(movie.imdbID)" class="cursor-pointer card-custom mx-auto" style="max-width: 250px;">
+<div  class="card-custom mx-auto" style="max-width: 250px;">
   <div class="card text-white border-custom position-relative" >
 
-    <i class="z-3 bi bi-heart fs-3 position-absolute position-custom"></i>
+    <i (click)="addToFavorites()" class="z-3 bi bi-suit-heart fs-3 position-absolute position-custom cursor-pointer"></i>
     <div class="overlay border-custom"></div>
     <img [src]="movie.Poster" class="card-img-top border-custom" alt="Pinguim">
 
-    <div class="z-3 card-body bg-custom">
+    <div routerLink="/details" (click)="getMovieDetails(movie.imdbID)" class="z-3 card-body bg-custom cursor-pointer ">
       <h5 class="card-title fs-3 fw-semibold text-truncate">{{ movie.Title }}</h5>
       <p class="card-text fs-6 ps-1">{{ movie.Year }}</p>
 

@@ -3,11 +3,12 @@ import { FavoriteService } from '../../services/favorite.service';
 import { CommonModule } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { OmdbService } from '../../services/api/omdb.service';
+import { ButtonComponent } from "../../components/button/button.component";
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ButtonComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
