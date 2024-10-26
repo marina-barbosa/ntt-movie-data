@@ -17,10 +17,16 @@
     </div>
 
     <div>
-      <app-button routerLink="/login" variant="primary" ariaLabel="Ir para a página de login">
-        <img src="./gmail-icon.svg" alt="icone do gmail" />
-        Entrar
-      </app-button>
+      <ng-container *ngIf="isLoggedIn(); else loginTemplate">
+        <app-sidebar></app-sidebar>
+        <button (click)="logout()">Logout</button> 
+      </ng-container>
+      <ng-template #loginTemplate>
+        <app-button (click)="login()" variant="primary" ariaLabel="Ir para a página de login">
+          <img src="./gmail-icon.svg" alt="ícone do gmail" />
+          Entrar
+        </app-button>
+      </ng-template>
     </div>
 
   </div>
