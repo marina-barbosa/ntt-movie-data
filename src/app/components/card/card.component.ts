@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ButtonComponent } from "../button/button.component";
 import { Router, RouterModule } from '@angular/router';
 import { OmdbService } from '../../services/api/omdb.service';
+import { MovieDataService } from '../../services/movie-data.service';
 
 @Component({
   selector: 'app-card',
@@ -13,12 +14,12 @@ import { OmdbService } from '../../services/api/omdb.service';
 export class CardComponent {
   @Input() movie: any;
 
-  constructor(private omdbService: OmdbService, private router: Router) { }
+  constructor(private omdbService: OmdbService, private router: Router, private movieDataService: MovieDataService) { }
 
   getMovieDetails(imdbID: string) {
     this.omdbService.searchMovieDetails(imdbID).subscribe({
       next: (movieDetails) => {
-        localStorage.setItem('movieDetails', JSON.stringify(movieDetails));
+        this.movieDataService.setMovieDetails(movieDetails);
         this.router.navigate(['/details']);
       },
       error: (err) => {

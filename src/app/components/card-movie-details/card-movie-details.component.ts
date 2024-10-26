@@ -2,6 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { ButtonComponent } from "../button/button.component";
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MovieDataService } from '../../services/movie-data.service';
+
+export interface Movie {
+  Title: string;
+  Year: string;
+  Director: string;
+  imdbRating: string;
+  Released: string;
+  Genre: string;
+  Actors: string;
+  Plot: string;
+  Language: string;
+  Awards: string;
+  Poster: string;
+}
 
 @Component({
   selector: 'app-card-movie-details',
@@ -10,24 +25,18 @@ import { CommonModule } from '@angular/common';
   templateUrl: './card-movie-details.component.html',
   styleUrl: './card-movie-details.component.scss'
 })
+
+
+
 export class CardMovieDetailsComponent implements OnInit {
   movie: any;
-  private intervalId: any;
+
+  constructor(private movieDataService: MovieDataService) { }
 
   ngOnInit() {
-    this.intervalId = setInterval(() => {
-      const movieDetails = localStorage.getItem('movieDetails');
-      this.movie = movieDetails ? JSON.parse(movieDetails) : null;
-      if (this.movie) {
-        clearInterval(this.intervalId);
-        //console.log(this.movie);
-      }
-    }, 500);
+    this.movieDataService.movieDetails$.subscribe((movieDetails) => {
+      this.movie = movieDetails;
+    });
   }
 
-  ngOnDestroy() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
-  }
 }
