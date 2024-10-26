@@ -1,20 +1,23 @@
-<section *ngIf="movie != undefined" [ngClass]="{'fade-in': !isVisible, 'fade-in-active': isVisible}" class="d-flex justify-content-center flex-column flex-lg-row">
+<section *ngIf="movie != undefined" [ngClass]="{'fade-in': !isVisible, 'fade-in-active': isVisible}"
+  class="d-flex justify-content-center flex-column flex-lg-row">
   <div class="mx-auto mx-lg-0 mt-5 mt-lg-0">
-    <img [src]="movie.Poster" class="img-custom rounded">
+    <img [src]="movie.Poster" class="img-custom rounded shadow">
   </div>
   <div class="d-flex justify-content-center align-items-center">
     <div class="mx-auto custom-container p-5 p-lg-0">
-      <h1 class="fw-bold text-yellow">{{ movie.Title }}</h1>
+      <h1 class="fw-bold text-yellow text-shadow">{{ movie.Title }}</h1>
       <p><strong>Diretor:</strong> {{ movie.Director }}</p>
       <p><strong>Year:</strong> {{ movie.Year }} <span class="bg-yellow rounded px-2 mx-1">IMDb Ratings:{{
           movie.imdbRating }}</span> <strong>Released:</strong> {{ movie.Released }}</p>
-      <p class="rounded px-2 bg-secondary text-white fit-content"><strong>Genre:</strong> {{ translatedGenre || movie.Genre }}</p>
+      <p class="rounded px-2 bg-secondary text-white fit-content"><strong>Genre:</strong> {{ translatedGenre ||
+        movie.Genre }}</p>
       <p><strong>Actors:</strong> {{ movie.Actors }}</p>
       <p><strong>Plot:</strong> {{ translatedPlot || movie.Plot }}</p>
-      <p class="text-yellow fst-italic"><strong>Language:</strong> {{ translatedLanguage || movie.Language }}</p>
-      <p><i class="bi bi-award-fill text-yellow fs-5 me-2"></i>{{ translatedAwards || movie.Awards }}</p>      
+      <p class="fst-italic"><strong>Language:</strong> {{ translatedLanguage || movie.Language }}</p>
+      <p><i class="bi bi-award-fill text-yellow fs-5 me-2"></i>{{ translatedAwards || movie.Awards }}</p>
       <div class="mt-5 d-flex justify-content-center gap-5 align-items-center">
-        <app-button variant="primary" (click)="addToFavorites()">Favoritar <i class="bi bi-heart"></i></app-button>
+        <app-button variant="primary" (click)="isFavorite ? removeFromFavorites() : addToFavorites()">{{ isFavorite ?
+          'Remover' : 'Favoritar' }} <i class="bi bi-heart"></i></app-button>
         <app-button routerLink="/" variant="primary">Voltar</app-button>
       </div>
     </div>
@@ -24,4 +27,3 @@
 <section *ngIf="movie == undefined" class="text-center">
   <h2 class="text-danger">Detalhes do filme não disponíveis.</h2>
 </section>
-

@@ -44,6 +44,7 @@ export class CardComponent implements OnInit {
           year: this.movie.Year
         });
         console.log('Filme adicionado aos favoritos:', this.movie.Title);
+        this.isFavorite = true;
       } catch (error) {
         console.error('Erro ao adicionar aos favoritos:', error);
       }

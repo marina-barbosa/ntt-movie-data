@@ -32,12 +32,13 @@ export interface Movie {
 
 
 export class CardMovieDetailsComponent implements OnInit {
-  movie: Movie | undefined;
+  movie: Movie | any;
   isVisible: boolean = false;
   translatedPlot: string | undefined;
   translatedAwards: string | undefined;
   translatedGenre: string | undefined;
   translatedLanguage: string | undefined;
+  isFavorite: boolean = true;
 
   constructor(
     private movieDataService: MovieDataService,
@@ -46,6 +47,7 @@ export class CardMovieDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.checkIfFavorite();
     setTimeout(() => {
       this.isVisible = true;
     }, 500);
@@ -53,11 +55,14 @@ export class CardMovieDetailsComponent implements OnInit {
     this.movieDataService.movieDetails$.subscribe((movieDetails) => {
       this.movie = movieDetails;
       if (this.movie != undefined) {
-        this.translateText();
+        // this.translateText();
       }
     });
+  }
 
-    this.translateText()
+  private async checkIfFavorite() {
+    const favorites = await this.favoriteService.getFavorites();
+    this.isFavorite = this.favoriteService.checkExistsInFavorites(favorites, this.movie.imdbID);
   }
 
   async addToFavorites() {
@@ -69,13 +74,24 @@ export class CardMovieDetailsComponent implements OnInit {
           year: this.movie.Year
         });
         console.log('Filme adicionado aos favoritos:', this.movie.Title);
+        this.isFavorite = true;
       } catch (error) {
         console.error('Erro ao adicionar aos favoritos:', error);
       }
     }
   }
 
-
+  async removeFromFavorites() {
+    if (this.movie) {
+      try {
+        await this.favoriteService.removeFavorite(this.movie.imdbID);
+        console.log('Filme removido dos favoritos:', this.movie.Title);
+        this.isFavorite = false;
+      } catch (error) {
+        console.error('Erro ao remover dos favoritos:', error);
+      }
+    }
+  }
 
   translateText() {
     if (this.movie) {

@@ -8,11 +8,11 @@
       class="z-3 bi fs-3 position-absolute position-custom cursor-pointer"
       [ngClass]="isFavorite ? 'bi-suit-heart-fill text-danger' : 'bi-suit-heart hover-blue'" 
     ></i>
-    <div class="overlay border-custom"></div>
-    <img [src]="movie.Poster" class="card-img-top border-custom" alt="Pinguim">
+    <div class="overlay border-custom shadow"></div>
+    <img [src]="movie.Poster" class="card-img-top border-custom shadow-sm" alt="Pinguim">
 
     <div routerLink="/details" (click)="getMovieDetails(movie.imdbID)" class="z-3 card-body bg-custom cursor-pointer ">
-      <h5 class="card-title fs-3 fw-semibold text-truncate">{{ movie.Title }}</h5>
+      <h5 class="card-title fs-3 fw-semibold truncate-multiline">{{ movie.Title }}</h5>
       <p class="card-text fs-6 ps-1">{{ movie.Year }}</p>
 
       <div class="d-flex align-items-center justify-content-between">
