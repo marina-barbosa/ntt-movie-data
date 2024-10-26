@@ -10,7 +10,7 @@
   <div class="offcanvas-body">
     <div *ngFor="let movie of favorites" class="favorite-item">
       <h6>
-        {{ movie.title }} ({{ movie.year }})
+        <span routerLink="/details" (click)="getMovieDetails(movie.id)" class="cursor-pointer text-truncate">{{ movie.title }} ({{ movie.year }})</span>
         <button (click)="removeFavorite(movie.id)" class="btn-remove" aria-label="Remover filme">X</button>
       </h6>
     </div>
