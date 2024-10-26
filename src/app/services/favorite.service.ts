@@ -17,7 +17,7 @@ export class FavoriteService {
       const userDoc = doc(this.db, 'users', user.uid);
       const favorites = await this.getFavorites();
 
-      const movieExists = favorites.some((fav: { id: string }) => fav.id === movie.id);
+      const movieExists = this.checkExistsInFavorites(favorites, movie.id);
 
       if (!movieExists) {
         await setDoc(userDoc, {
@@ -34,6 +34,10 @@ export class FavoriteService {
     } else {
       console.error('Usuário não está autenticado.');
     }
+  }
+
+  checkExistsInFavorites(favorites: { id: string }[], movieId: string): boolean {
+    return favorites.some((fav) => fav.id === movieId);
   }
 
   async getFavorites(): Promise<{ id: string, title: string, year: string }[]> {

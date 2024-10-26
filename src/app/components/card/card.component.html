@@ -3,7 +3,11 @@
 <div  class="card-custom mx-auto" style="max-width: 250px;">
   <div class="card text-white border-custom position-relative" >
 
-    <i (click)="addToFavorites()" class="z-3 bi bi-suit-heart fs-3 position-absolute position-custom cursor-pointer"></i>
+    <i 
+      (click)="isFavorite ? removeFromFavorites() : addToFavorites()"
+      class="z-3 bi fs-3 position-absolute position-custom cursor-pointer"
+      [ngClass]="isFavorite ? 'bi-suit-heart-fill text-danger' : 'bi-suit-heart'" 
+    ></i>
     <div class="overlay border-custom"></div>
     <img [src]="movie.Poster" class="card-img-top border-custom" alt="Pinguim">
 
