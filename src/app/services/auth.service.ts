@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
-import { environment } from '../../../src/environments/environment';
+import { environment } from '../../../src/environments/environment.prod';
 import { FavoriteService } from './favorite.service';
 
 
