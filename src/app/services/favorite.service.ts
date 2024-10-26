@@ -16,9 +16,13 @@ export class FavoriteService {
     if (user) {
       const userDoc = doc(this.db, 'users', user.uid);
       await setDoc(userDoc, {
-        favorites: arrayUnion(movie)        
+        favorites: arrayUnion(movie)
       }, { merge: true });
       console.log("movie added to favorites:", movie);
+
+      const localFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+      localFavorites.push(movie);
+      localStorage.setItem('favorites', JSON.stringify(localFavorites));
     } else {
       console.error('Usuário não está autenticado.');
     }
@@ -36,4 +40,23 @@ export class FavoriteService {
     }
     return [];
   }
+
+  async loadFavoritesToLocalStorage() {
+    const favorites = await this.getFavorites();
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }
+
+  async getFavoritesFromLocalStorageOrFirebase(): Promise<{ id: string, title: string, year: string }[]> {
+    const localFavorites = localStorage.getItem('favorites');
+
+    if (localFavorites) {
+      return JSON.parse(localFavorites);
+    } else {
+      const favorites = await this.getFavorites();
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      return favorites;
+    }
+  }
+
+
 }

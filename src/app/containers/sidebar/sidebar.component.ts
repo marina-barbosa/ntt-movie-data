@@ -21,6 +21,11 @@ export class SidebarComponent implements OnInit {
   }
 
   async loadFavorites() {
-    this.favorites = await this.favoriteService.getFavorites();
+    this.favorites = await this.favoriteService.getFavoritesFromLocalStorageOrFirebase();
   }
+
+  async onOpen() {
+    await this.loadFavorites();
+  }
+  
 }
