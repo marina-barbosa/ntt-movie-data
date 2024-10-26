@@ -13,14 +13,13 @@ export class OmdbService {
   constructor(private http: HttpClient) { }
 
   searchMovie(title: string): Observable<any> {
-    // `http://www.omdbapi.com/?apiKey=[this.apiKey]&s=${title}&page=${pageIndex}` // paginado?
-    // const params = { apikey: this.apiKey, t: title }; // busca apenas um
-    const params = { apikey: this.apiKey, s: title };  // busca uma lista
+    // `http://www.omdbapi.com/?apiKey=[this.apiKey]&s=${title}&page=${pageIndex}` // paginado? preciso testar isso dps
+    const params = { apikey: this.apiKey, s: title };
     return this.http.get<any>(this.baseUrl, { params });
   }
 
   searchMovieDetails(imdbID: string): Observable<any> {
-    const params = { apikey: this.apiKey, i: imdbID };  //  'i' para busca por imdbID
+    const params = { apikey: this.apiKey, i: imdbID };
     return this.http.get<any>(this.baseUrl, { params });
   }
 }

@@ -14,7 +14,7 @@
       <p class="text-yellow fst-italic"><strong>Language:</strong> {{ movie.Language }}</p>
       <p><i class="bi bi-award-fill text-yellow fs-5 me-2"></i>{{ movie.Awards }}</p>      
       <div class="mt-5 d-flex justify-content-center gap-5 align-items-center">
-        <app-button variant="primary">Favoritar <i class="bi bi-heart"></i></app-button>
+        <app-button variant="primary" (click)="addToFavorites()">Favoritar <i class="bi bi-heart"></i></app-button>
         <app-button routerLink="/" variant="primary">Voltar</app-button>
       </div>
     </div>
