@@ -1,4 +1,12 @@
+@import '../../../styles.scss';
+
 #cards-grid{
-  margin-top: 60px;
+  margin-top: 20px;
   margin-bottom: 80px;
 }
+
+h2 {
+  // color: $color-blue;
+  color: $color-gray;
+}
+
