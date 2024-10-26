@@ -1,4 +1,4 @@
-<section *ngIf="movie != undefined" class="d-flex justify-content-center flex-column flex-lg-row">
+<section *ngIf="movie != undefined" [ngClass]="{'fade-in': !isVisible, 'fade-in-active': isVisible}" class="d-flex justify-content-center flex-column flex-lg-row">
   <div class="mx-auto mx-lg-0 mt-5 mt-lg-0">
     <img [src]="movie.Poster" class="img-custom rounded">
   </div>

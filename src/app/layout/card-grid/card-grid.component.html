@@ -1,8 +1,11 @@
 
-<div id="cards-grid" class="row g-5 mx-auto" style="max-width: 1200px; min-height: 40vh;">
+<div id="cards-grid" class="row g-5 mx-auto" [ngClass]="{'fade-in': !gridVisible, 'fade-in-active': gridVisible}"  style="max-width: 1200px; min-height: 40vh;">
   <ng-container *ngIf="movies.length > 0; else noMoviesMessage">
-    <div *ngFor="let movie of movies" class="col-lg-3 col-md-6 col-sm-12">
-      <app-card [movie]="movie"></app-card>
+    <div *ngFor="let movie of movies; let i = index" class="col-lg-3 col-md-6 col-sm-12">
+      <app-card 
+        [movie]="movie" 
+        [ngClass]="{'fade-in': !visibleCards[i], 'fade-in-active': visibleCards[i]}">
+      </app-card>
     </div>
   </ng-container>
   

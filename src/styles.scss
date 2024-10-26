@@ -31,4 +31,20 @@ $color-white: #f6f8fd; // Branco para fundo e texto
   flex: 1;
 }
 
+* {
+  transition: all 0.3s ease-in-out;
+}
+
+.button, .btn, button, a, .link-custom {
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out; 
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.fade-in-active {
+  opacity: 1;
+}
 

@@ -31,6 +31,7 @@ export interface Movie {
 
 export class CardMovieDetailsComponent implements OnInit {
   movie: any;
+  isVisible: boolean = false;
 
   constructor(
     private movieDataService: MovieDataService,
@@ -38,6 +39,10 @@ export class CardMovieDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.isVisible = true;
+    }, 500);
+
     this.movieDataService.movieDetails$.subscribe((movieDetails) => {
       this.movie = movieDetails;
     });
