@@ -52,3 +52,9 @@ $color-white: #f6f8fd; // Branco para fundo e texto
   cursor: pointer;
 }
 
+.hover-blue {
+  &:hover {
+    color: $color-blue !important;
+  }
+}
+

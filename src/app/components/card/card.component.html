@@ -6,7 +6,7 @@
     <i 
       (click)="isFavorite ? removeFromFavorites() : addToFavorites()"
       class="z-3 bi fs-3 position-absolute position-custom cursor-pointer"
-      [ngClass]="isFavorite ? 'bi-suit-heart-fill text-danger' : 'bi-suit-heart'" 
+      [ngClass]="isFavorite ? 'bi-suit-heart-fill text-danger' : 'bi-suit-heart hover-blue'" 
     ></i>
     <div class="overlay border-custom"></div>
     <img [src]="movie.Poster" class="card-img-top border-custom" alt="Pinguim">
