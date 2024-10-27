@@ -58,3 +58,10 @@ $color-white: #f6f8fd; // Branco para fundo e texto
   }
 }
 
+.toast-custom {
+  position: fixed;
+  top: 5rem;
+  right: 1rem;
+  z-index: 1050;
+}
+

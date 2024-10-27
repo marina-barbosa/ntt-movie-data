@@ -1,23 +1,26 @@
 <section *ngIf="movie != undefined" [ngClass]="{'fade-in': !isVisible, 'fade-in-active': isVisible}"
-  class="d-flex justify-content-center flex-column flex-lg-row">
+  class=" d-flex justify-content-center flex-column flex-lg-row rounded-md">
   <div class="mx-auto mx-lg-0 mt-5 mt-lg-0">
     <img [src]="movie.Poster" class="img-custom rounded shadow">
   </div>
+
   <div class="d-flex justify-content-center align-items-center">
-    <div class="mx-auto custom-container p-5 p-lg-0">
-      <h1 class="fw-bold text-yellow text-shadow">{{ movie.Title }}</h1>
-      <p><strong>Diretor:</strong> {{ movie.Director }}</p>
-      <p><strong>Year:</strong> {{ movie.Year }} <span class="bg-yellow rounded px-2 mx-1">IMDb Ratings:{{
-          movie.imdbRating }}</span> <strong>Released:</strong> {{ movie.Released }}</p>
-      <p class="rounded px-2 bg-secondary text-white fit-content"><strong>Genre:</strong> {{ translatedGenre ||
-        movie.Genre }}</p>
-      <p><strong>Actors:</strong> {{ movie.Actors }}</p>
-      <p><strong>Plot:</strong> {{ translatedPlot || movie.Plot }}</p>
-      <p class="fst-italic"><strong>Language:</strong> {{ translatedLanguage || movie.Language }}</p>
-      <p><i class="bi bi-award-fill text-yellow fs-5 me-2"></i>{{ translatedAwards || movie.Awards }}</p>
-      <div class="mt-5 d-flex justify-content-center gap-5 align-items-center">
-        <app-button variant="primary" (click)="isFavorite ? removeFromFavorites() : addToFavorites()">{{ isFavorite ?
-          'Remover' : 'Favoritar' }} <i class="bi bi-heart"></i></app-button>
+    <div class="mx-auto custom-container p-5 p-lg-0 d-flex flex-column h-100">
+      <div class="grow-custom rounded glass-custom">
+        <h1 class="fw-bold text-yellow text-shadow">{{ movie.Title }}</h1>
+        <p><strong>Diretor:</strong> {{ movie.Director }}</p>
+        <p><strong>Year:</strong> {{ movie.Year }} <span class="bg-yellow rounded px-2 mx-1">IMDb Ratings: {{
+            movie.imdbRating }}</span> <strong>Released:</strong> {{ movie.Released }}</p>
+        <p class="rounded px-2 bg-secondary text-white fit-content"><strong>Genre:</strong> {{ translatedGenre ||
+          movie.Genre }}</p>
+        <p><strong>Actors:</strong> {{ movie.Actors }}</p>
+        <p><strong>Plot:</strong> {{ translatedPlot || movie.Plot }}</p>
+        <p class="fst-italic"><strong>Language:</strong> {{ translatedLanguage || movie.Language }}</p>
+        <p><i class="bi bi-award-fill text-yellow fs-5 me-2"></i>{{ translatedAwards || movie.Awards }}</p>
+      </div>
+      <div class="mt-5 d-flex justify-content-center gap-5 align-items-center pb-4">
+        <app-button variant="primary" (click)="toggleFavorite()">{{ isFavorite ?
+          'Remover' : 'Favoritar' }} <i class="bi bi-heart-fill text-danger"></i></app-button>
         <app-button routerLink="/" variant="primary">Voltar</app-button>
       </div>
     </div>
@@ -25,7 +28,19 @@
 </section>
 
 <section *ngIf="movie == undefined" class="text-center">
-  <h2 class="fw-bold text-center mt-4 d-flex align-items-center" style="max-width: 800px; margin: auto;">
-    Descubra, favorite e explore o universo dos filmes! Encontre os melhores títulos e crie sua coleção pessoal com um toque.
+  <h2 class="fw-bold text-center mt-4 d-flex align-items-center px-3" style="max-width: 800px; margin: auto;">
+    Descubra, favorite e explore o universo dos filmes! Encontre os melhores títulos e crie sua coleção pessoal com um
+    toque.
   </h2>
 </section>
+
+<div class="toast toast-custom align-items-center text-bg-danger border-0" role="alert" aria-live="assertive"
+  aria-atomic="true" #loginToast>
+  <div class="d-flex">
+    <div class="toast-body">
+      {{toastText}}
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+      aria-label="Close"></button>
+  </div>
+</div>

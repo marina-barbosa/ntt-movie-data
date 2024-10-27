@@ -15,10 +15,10 @@ import { Router } from '@angular/router';
 })
 export class SearchComponent {
   movieTitle: string = '';
-
   movieData: any = null;
   selectedMovie: any = null;
   errorMessage: string = '';
+  showAlert: boolean = false;
 
   constructor(private omdbService: OmdbService, private movieDataService: MovieDataService, private router: Router) { }
 
@@ -31,21 +31,26 @@ export class SearchComponent {
             //console.log(data);
             this.movieDataService.setMovies(data.Search);
             this.errorMessage = '';
+            this.showAlert = false;
             if (this.router.url !== '/') {
               this.router.navigate(['/']);
             }
           } else {
             this.movieDataService.setMovies([]);
-            this.errorMessage = 'Filme não encontrado!';
+            this.errorMessage = 'Nenhum filme encontrado.';
+            this.showAlert = true;
+            return
           }
         },
         error: () => {
           this.movieDataService.setMovies([]);
-          this.errorMessage = 'Ocorreu um erro ao buscar o filme!';
+          this.errorMessage = 'Ocorreu um erro ao buscar o filme.';
+          this.showAlert = true;
         },
       });
     } else {
-      this.errorMessage = 'O título do filme não pode estar vazio!';
+      this.errorMessage = 'O campo título do filme esta vazio.';
+      this.showAlert = true;
       this.movieDataService.setMovies([]);
     }
   }

@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ButtonComponent } from "../button/button.component";
 import { Router, RouterModule } from '@angular/router';
 import { OmdbService } from '../../services/api/omdb.service';
 import { MovieDataService } from '../../services/movie-data.service';
 import { FavoriteService } from '../../services/favorite.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-card',
@@ -16,11 +17,24 @@ import { CommonModule } from '@angular/common';
 export class CardComponent implements OnInit {
   @Input() movie: any;
   isFavorite: boolean = false;
+  @ViewChild('loginToast', { static: false }) loginToast!: ElementRef;
 
-  constructor(private omdbService: OmdbService, private router: Router, private movieDataService: MovieDataService, private favoriteService: FavoriteService) { }
+  constructor(private omdbService: OmdbService, private router: Router, private movieDataService: MovieDataService, private favoriteService: FavoriteService, private authService: AuthService, private renderer: Renderer2) { }
 
   ngOnInit(): void {
     this.checkIfFavorite();
+  }
+
+  toggleFavorite() {
+    if (this.authService.isLoggedIn()) {
+      this.isFavorite ? this.removeFromFavorites() : this.addToFavorites();
+    } else {
+      this.renderer.addClass(this.loginToast.nativeElement, 'show');
+
+      setTimeout(() => {
+        this.renderer.removeClass(this.loginToast.nativeElement, 'show');
+      }, 4000);
+    }
   }
 
   getMovieDetails(imdbID: string) {

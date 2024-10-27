@@ -1,25 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ButtonComponent } from "../button/button.component";
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MovieDataService } from '../../services/movie-data.service';
 import { FavoriteService } from '../../services/favorite.service';
 import { TranslationService } from '../../services/translation.service';
-
-export interface Movie {
-  imdbID: string;
-  Title: string;
-  Year: string;
-  Director: string;
-  imdbRating: string;
-  Released: string;
-  Genre: string;
-  Actors: string;
-  Plot: string;
-  Language: string;
-  Awards: string;
-  Poster: string;
-}
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-card-movie-details',
@@ -32,22 +18,27 @@ export interface Movie {
 
 
 export class CardMovieDetailsComponent implements OnInit {
-  movie: Movie | any;
+  movie: any;
   isVisible: boolean = false;
   translatedPlot: string | undefined;
   translatedAwards: string | undefined;
   translatedGenre: string | undefined;
   translatedLanguage: string | undefined;
-  isFavorite: boolean = true;
+  isFavorite: boolean = false;
+  @ViewChild('loginToast', { static: false }) loginToast!: ElementRef;
+  toastText: string = '';
 
   constructor(
     private movieDataService: MovieDataService,
     private favoriteService: FavoriteService,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    private authService: AuthService,
+    private renderer: Renderer2
   ) { }
 
   ngOnInit() {
     this.checkIfFavorite();
+
     setTimeout(() => {
       this.isVisible = true;
     }, 500);
@@ -55,9 +46,23 @@ export class CardMovieDetailsComponent implements OnInit {
     this.movieDataService.movieDetails$.subscribe((movieDetails) => {
       this.movie = movieDetails;
       if (this.movie != undefined) {
-        // this.translateText();
+        this.translateText();
       }
     });
+  }
+
+  toggleFavorite() {
+    if (this.authService.isLoggedIn()) {
+      this.isFavorite ? this.removeFromFavorites() : this.addToFavorites();
+    } else {
+      this.toastText = 'Por favor, faca o login para adicionar favoritos';
+      this.renderer.addClass(this.loginToast.nativeElement, 'show');
+
+      setTimeout(() => {
+        this.renderer.removeClass(this.loginToast.nativeElement, 'show');
+        this.toastText = '';
+      }, 4000);
+    }
   }
 
   private async checkIfFavorite() {
@@ -98,27 +103,18 @@ export class CardMovieDetailsComponent implements OnInit {
       this.translationService.translate(this.movie.Plot).subscribe({
         next: (response) => {
           this.translatedPlot = response.responseData.translatedText;
-        },
-        error: (error) => {
-          console.error('Erro ao traduzir o Plot:', error);
         }
       });
 
       this.translationService.translate(this.movie.Awards).subscribe({
         next: (response) => {
           this.translatedAwards = response.responseData.translatedText;
-        },
-        error: (error) => {
-          console.error('Erro ao traduzir os Awards:', error);
         }
       });
 
       this.translationService.translate(this.movie.Genre).subscribe({
         next: (response) => {
           this.translatedGenre = response.responseData.translatedText;
-        },
-        error: (error) => {
-          console.error('Erro ao traduzir o Gênero:', error);
         }
       });
 
@@ -127,7 +123,15 @@ export class CardMovieDetailsComponent implements OnInit {
           this.translatedLanguage = response.responseData.translatedText;
         },
         error: (error) => {
-          console.error('Erro ao traduzir a Language:', error);
+          console.error('Erro ao traduzir', error);
+
+          this.toastText = 'ERRO 429: Desculpe, ocorreu um erro ao traduzir as informacoes. Tente novamente mais tarde.';
+          this.renderer.addClass(this.loginToast.nativeElement, 'show');
+
+          setTimeout(() => {
+            this.renderer.removeClass(this.loginToast.nativeElement, 'show');
+            this.toastText = '';
+          }, 4000);
         }
       });
     }

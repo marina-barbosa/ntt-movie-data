@@ -2,7 +2,7 @@
 
   <div class="container-xl mx-auto d-flex align-items-center justify-content-between">
 
-    <div class="rounded-circle p-2 d-flex justify-content-center align-items-center" role="img"
+    <div class="d-none d-md-block rounded-circle p-2 d-flex justify-content-center align-items-center" role="img"
       aria-label="Logo NTT Movie DATA">
       <a routerLink="/" class="text-decoration-none">
         <img src="./kit-cinema.png" alt="Logo NTT Movie DATA" class="logo-custom" aria-hidden="true">
@@ -19,7 +19,7 @@
     <div class="d-flex align-items-center gap-2">
       <ng-container *ngIf="isLoggedIn(); else loginTemplate">
         <app-sidebar></app-sidebar>
-        <i class="bi bi-box-arrow-in-right text-white fs-4 cursor-pointer hover-blue" (click)="logout()"></i>
+        <i class="bi bi-box-arrow-in-right text-white fs-1 cursor-pointer hover-blue" (click)="logout()"></i>
       </ng-container>
       <ng-template #loginTemplate>
         <app-button (click)="login()" variant="primary" ariaLabel="Ir para a página de login">

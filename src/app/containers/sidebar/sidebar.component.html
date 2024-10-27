@@ -3,18 +3,18 @@
 
 <div class="offcanvas offcanvas-end text-white" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
   (shown.bs.offcanvas)="loadFavorites()">
-  <div class="offcanvas-header bg-custom">
-    <h5 class="offcanvas-title" id="offcanvasRightLabel">Lista de Favoritos</h5>
+  <div class="offcanvas-header bg-custom p-4">
+    <h5 class="offcanvas-title fw-bold text-warning" id="offcanvasRightLabel">Lista de Favoritos</h5>
     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
-  <div class="offcanvas-body bg-custom">
+  <div class="offcanvas-body bg-custom px-4">
     <div *ngFor="let movie of favorites" class="favorite-item">
-      <h6>
+      <h6 class="d-flex align-items-center justify-content-between py-2 hover-blue">
         <span 
           id="favorite-title" 
           routerLink="/details" 
           (click)="getMovieDetails(movie.id)" 
-          class="cursor-pointer text-truncate hover-blue"
+          class="cursor-pointer text-truncate"
           data-bs-dismiss="offcanvas"
         >
           {{ movie.title }} ({{ movie.year }})

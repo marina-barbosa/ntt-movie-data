@@ -16,3 +16,11 @@
   opacity: 1; 
 }
 
+#favorite-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  // padding-block: 5px;
+}
+
