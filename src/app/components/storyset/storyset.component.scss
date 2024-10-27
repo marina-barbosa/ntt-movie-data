@@ -1,7 +1,18 @@
 svg {
-  width: 50vh;
-  position: fixed;
-  top: 57%;
+  max-width: 50vh;
+  position: absolute;
+  top: 55%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50% );
+}
+
+
+
+@media only screen and (max-height: 932px) {
+
+  svg{
+    position: static;
+    transform: none;
+    max-width: 50vh;
+  }
 }
