@@ -1,12 +1,33 @@
 
 <div id="cards-grid" class="row g-5 mx-auto" [ngClass]="{'fade-in': !gridVisible, 'fade-in-active': gridVisible}"  style="max-width: 1200px; min-height: 40vh;">
   <ng-container *ngIf="movies.length > 0; else noMoviesMessage">
+    <p class="fs-5">Encontrados {{totalResults}} resultados para sua pesquisa.</p>
     <div *ngFor="let movie of movies; let i = index" class="col-lg-3 col-md-6 col-sm-12">
       <app-card 
         [movie]="movie" 
         [ngClass]="{'fade-in': !visibleCards[i], 'fade-in-active': visibleCards[i]}">
       </app-card>
     </div>
+
+    <nav aria-label="Page navigation example">
+      <div class="d-flex justify-content-center">
+        <ul class="pagination">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link bg-custom text-white cursor-pointer" (click)="prevPage()" aria-label="Anterior">
+              <span aria-hidden="true">&laquo; Prev</span>
+            </a>
+          </li>
+          <li class="page-item" [class.active]="">
+            <a class="page-link bg-custom text-white">{{currentPage}}</a>
+          </li>
+          <li class="page-item" [class.disabled]="totalResults <= currentPage * 10">
+            <a class="page-link bg-custom text-white cursor-pointer" (click)="nextPage()" aria-label="Próximo">
+              <span aria-hidden="true">Next &raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </ng-container>
   
   <ng-template #noMoviesMessage>
