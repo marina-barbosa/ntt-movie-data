@@ -21,6 +21,7 @@
 section{
   min-width: 95vw;
   gap: 6%;
+  margin-top: 150px;
 }
 .glass-custom{
   flex: 1;
@@ -35,4 +36,10 @@ section{
 
 .grow-custom{
   flex: 1;
+}
+
+@media (min-width: 768px) {
+  section {
+    margin-top: 200px;
+  }
 }

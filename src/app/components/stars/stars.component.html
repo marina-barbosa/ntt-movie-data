@@ -1,0 +1,9 @@
+<div class="stars">
+  <span *ngFor="let star of stars" [ngStyle]="{
+    width: star.size,
+    height: star.size,
+    top: star.top,
+    left: star.left,
+    animationDelay: star.delay
+  }"></span>
+</div>

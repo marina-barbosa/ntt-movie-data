@@ -1,18 +1,19 @@
-<header class="p-3 bg-custom" role="banner" aria-label="Header do site NTT Movie DATA">
+<header class="p-3 bg-custom fixed-top header-with-stars" role="banner" aria-label="Header do site NTT Movie DATA">
 
-  <div class="container-xl mx-auto d-flex align-items-center justify-content-between">
+  <div class="container-xl mx-auto d-flex align-items-center justify-content-between z-3">
 
     <div class="d-none d-md-block rounded-circle p-2 d-flex justify-content-center align-items-center" role="img"
       aria-label="Logo NTT Movie DATA">
       <a routerLink="/" class="text-decoration-none">
-        <img src="./kit-cinema.png" alt="Logo NTT Movie DATA" class="logo-custom" aria-hidden="true">
+        <img src="./LoguinhoA.png" alt="Logo NTT Movie DATA" class="logo-custom" aria-hidden="true">
       </a>
     </div>
 
-    <div>
-      <a routerLink="/" class="d-flex align-items-center justify-content-center text-decoration-none"
+    <div class="text-center">
+      <a routerLink="/" class="d-flex align-items-center justify-content-center text-decoration-none "
         aria-label="Ir para a página inicial">
-        <span class="fs-3 text-white fw-bold hover-blue">NTT Movie DATA</span>
+        <!-- <span class="fs-3 text-white fw-bold hover-blue">NTT Movie DATA</span> -->
+        <img src="./LOGOB.png" alt="Logo NTT Movie DATA" class="title-custom" aria-hidden="true">
       </a>
     </div>
 
@@ -31,8 +32,10 @@
 
   </div>
 
-  <div class="mt-3" aria-label="Campo de busca">
+  <div class="mt-3 z-3" aria-label="Campo de busca">
     <app-search></app-search>
   </div>
+
+  <app-stars></app-stars>
 
 </header>

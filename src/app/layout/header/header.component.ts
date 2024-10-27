@@ -5,11 +5,12 @@ import { RouterModule } from '@angular/router';
 import { SidebarComponent } from "../../containers/sidebar/sidebar.component";
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { StarsComponent } from "../../components/stars/stars.component";
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [ButtonComponent, SearchComponent, RouterModule, SidebarComponent, CommonModule],
+  imports: [ButtonComponent, SearchComponent, RouterModule, SidebarComponent, CommonModule, StarsComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

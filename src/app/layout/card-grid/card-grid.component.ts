@@ -2,11 +2,12 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { CardComponent } from "../../components/card/card.component";
 import { CommonModule } from '@angular/common';
 import { MovieDataService } from '../../services/movie-data.service';
+import { StorysetComponent } from "../../components/storyset/storyset.component";
 
 @Component({
   selector: 'app-card-grid',
   standalone: true,
-  imports: [CardComponent, CommonModule],
+  imports: [CardComponent, CommonModule, StorysetComponent],
   templateUrl: './card-grid.component.html',
   styleUrl: './card-grid.component.scss'
 })
