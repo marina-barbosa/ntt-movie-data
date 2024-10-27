@@ -9,13 +9,13 @@
       <div class="grow-custom rounded glass-custom">
         <h1 class="fw-bold text-yellow text-shadow">{{ movie.Title }}</h1>
         <p><strong>Diretor:</strong> {{ movie.Director }}</p>
-        <p><strong>Year:</strong> {{ movie.Year }} <span class="bg-yellow rounded px-2 mx-1">IMDb Ratings: {{
-            movie.imdbRating }}</span> <strong>Released:</strong> {{ movie.Released }}</p>
-        <p class="rounded px-2 bg-secondary text-white fit-content"><strong>Genre:</strong> {{ translatedGenre ||
+        <p><strong>Ano:</strong> {{ movie.Year }} <span class="bg-yellow rounded px-2 mx-1">Avaliações do IMDb: {{
+            movie.imdbRating }}</span> <strong>Lançado:</strong> {{ movie.Released }}</p>
+        <p class="rounded px-2 bg-secondary text-white fit-content"><strong>Gênero:</strong> {{ translatedGenre ||
           movie.Genre }}</p>
-        <p><strong>Actors:</strong> {{ movie.Actors }}</p>
-        <p><strong>Plot:</strong> {{ translatedPlot || movie.Plot }}</p>
-        <p class="fst-italic"><strong>Language:</strong> {{ translatedLanguage || movie.Language }}</p>
+        <p><strong>Atores:</strong> {{ movie.Actors }}</p>
+        <p><strong>Enredo:</strong> {{ translatedPlot || movie.Plot }}</p>
+        <p class="fst-italic"><strong>Idioma:</strong> {{ translatedLanguage || movie.Language }}</p>
         <p><i class="bi bi-award-fill text-yellow fs-5 me-2"></i>{{ translatedAwards || movie.Awards }}</p>
       </div>
       <div class="mt-5 d-flex justify-content-center gap-5 align-items-center pb-4">
