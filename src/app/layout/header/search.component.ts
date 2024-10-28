@@ -30,6 +30,8 @@ export class SearchComponent {
           if (data?.Response === 'True') {
             //console.log(data);
             this.movieDataService.setMovies(data.Search);
+            this.movieDataService.setTotalResults(parseInt(data.totalResults, 10));
+            this.movieDataService.setTitle(trimmedTitle);
             this.errorMessage = '';
             this.showAlert = false;
             if (this.router.url !== '/') {

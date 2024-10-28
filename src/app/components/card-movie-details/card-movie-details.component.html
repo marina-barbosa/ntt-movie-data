@@ -10,12 +10,12 @@
         <h1 class="fw-bold text-yellow text-shadow">{{ movie.Title }}</h1>
         <p><strong>Diretor:</strong> {{ movie.Director }}</p>
         <p><strong>Ano:</strong> {{ movie.Year }} <span class="bg-yellow rounded px-2 mx-1">Avaliações do IMDb: {{
-            movie.imdbRating }}</span> <strong>Lançado:</strong> {{ movie.Released }}</p>
+            movie.imdbRating }}</span> <strong>Lançado:</strong> {{ movie.Released }}  </p>
         <p class="rounded px-2 bg-secondary text-white fit-content"><strong>Gênero:</strong> {{ translatedGenre ||
           movie.Genre }}</p>
         <p><strong>Atores:</strong> {{ movie.Actors }}</p>
         <p><strong>Enredo:</strong> {{ translatedPlot || movie.Plot }}</p>
-        <p class="fst-italic"><strong>Idioma:</strong> {{ translatedLanguage || movie.Language }}</p>
+        <p class="fst-italic"><strong>Idioma:</strong> {{ translatedLanguage || movie.Language }} &nbsp;&nbsp;<span><strong>Runtime:</strong> {{ movie.Runtime }}</span></p>
         <p><i class="bi bi-award-fill text-yellow fs-5 me-2"></i>{{ translatedAwards || movie.Awards }}</p>
       </div>
       <div class="mt-5 d-flex justify-content-center gap-5 align-items-center pb-4">
