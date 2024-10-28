@@ -88,3 +88,24 @@ src
 
 ![img](./public/screenshots/screencapture02.png)
 
+![img](./public/screenshots/screencapture03.png)
+
+
+
+Aqui está uma seção de **Próximas Funcionalidades** que você pode adicionar ao `README.md`:
+
+---
+
+## Próximas Funcionalidades
+
+As seguintes melhorias estão planejadas para futuras versões do projeto:
+
+- **Melhoria na aparência da lista de favoritos:** Tornar a exibição dos itens favoritos mais atrativa.
+- **Adicionar tipo de item na lista de favoritos:** Exibir o tipo (filme, série, episodio) ao lado do título na lista de favoritos para facilitar a identificação.
+- **Botão de acesso ao trailer no card de detalhes:** Incluir um botão na página de detalhes que leva o usuário diretamente ao trailer do item.
+- **Nova página para visualização de favoritos detalhada:** Criar uma página dedicada para exibir os favoritos com mais informações, opções de filtros e organização personalizada.
+
+---
+
+Essas funcionalidades serão implementadas em versões futuras para oferecer uma experiência ainda mais completa aos usuários da aplicação.
+
