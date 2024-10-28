@@ -1,6 +1,6 @@
 <section *ngIf="episode != undefined" [ngClass]="{'fade-in': !isVisible, 'fade-in-active': isVisible}" class="d-flex justify-content-center flex-column flex-lg-row rounded-md">
   <div class="mx-auto mx-lg-0 mt-5 mt-lg-0">
-    <img [src]="episode.Poster !== 'N/A' ? episode.Poster : './poster-default.jpg'" class="img-custom rounded shadow">
+    <img [src]="episode.Poster !== 'N/A' ? episode.Poster : './poster-default.jpg'" class="img-custom">
   </div>
 
   <div class="d-flex justify-content-center align-items-center">

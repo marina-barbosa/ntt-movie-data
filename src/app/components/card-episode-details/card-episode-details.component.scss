@@ -17,6 +17,9 @@
 }
 .img-custom {
   height: 60vh;
+  max-width: 90vw;
+  width: 100%;
+  object-fit: contain;
 }
 section{
   min-width: 95vw;
