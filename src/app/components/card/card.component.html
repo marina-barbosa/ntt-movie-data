@@ -9,7 +9,7 @@
       [ngClass]="isFavorite ? 'bi-suit-heart-fill text-danger' : 'bi-suit-heart hover-blue'" 
     ></i>
     <div class="overlay border-custom shadow"></div>
-    <img [src]="movie.Poster" class="card-img-top border-custom shadow-sm" alt="Pinguim">
+    <img [src]="movie.Poster !== 'N/A' ? movie.Poster : './poster-default.jpg'" class="card-img-top border-custom shadow-sm" alt="Pinguim">
 
     <div routerLink="/details" (click)="getMovieDetails(movie.imdbID)" class="z-3 card-body bg-custom cursor-pointer ">
       <h5 class="card-title fs-3 fw-semibold truncate-multiline">{{ movie.Title }}</h5>
