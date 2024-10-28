@@ -1,11 +1,12 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ButtonComponent } from "../button/button.component";
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MovieDataService } from '../../services/movie-data.service';
 import { FavoriteService } from '../../services/favorite.service';
 import { TranslationService } from '../../services/translation.service';
 import { AuthService } from '../../services/auth.service';
+import { OmdbService } from '../../services/api/omdb.service';
 
 @Component({
   selector: 'app-card-movie-details',
@@ -27,13 +28,18 @@ export class CardMovieDetailsComponent implements OnInit {
   isFavorite: boolean = false;
   @ViewChild('loginToast', { static: false }) loginToast!: ElementRef;
   toastText: string = '';
+  seasons: any[] = [];
+  selectedSeason: number | null = null;
+  episodes: any[] = [];
 
   constructor(
     private movieDataService: MovieDataService,
     private favoriteService: FavoriteService,
     private translationService: TranslationService,
     private authService: AuthService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private omdbService: OmdbService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -46,6 +52,7 @@ export class CardMovieDetailsComponent implements OnInit {
     this.movieDataService.movieDetails$.subscribe((movieDetails) => {
       this.movie = movieDetails;
       if (this.movie != undefined) {
+        this.loadSeasons();
         this.translateText();
       }
     });
@@ -135,6 +142,31 @@ export class CardMovieDetailsComponent implements OnInit {
         }
       });
     }
+  }
+
+  loadSeasons() {
+    if (this.movie.Type === 'series') {
+      const totalSeasons = this.movie.totalSeasons;
+      this.seasons = Array.from({ length: totalSeasons }, (_, i) => i + 1);
+    }
+  }
+
+  onSeasonChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedSeason = Number(selectElement.value);
+    this.loadEpisodes(this.selectedSeason);
+  }
+
+  loadEpisodes(season: number) {
+    this.omdbService.getSeasonDetails(this.movie.imdbID, season).subscribe((data) => {
+      this.episodes = data.Episodes;
+    });
+  }
+
+  onEpisodeChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedEpisodeId = selectElement.value;
+    this.router.navigate(['/episode', this.movie.imdbID, this.selectedSeason, selectedEpisodeId]);
   }
 
 }

@@ -17,6 +17,9 @@
 }
 .img-custom {
   height: 60vh;
+  max-width: 90vw;
+  width: 100%;
+  object-fit: contain;
 }
 section{
   min-width: 95vw;
@@ -26,26 +29,13 @@ section{
 .glass-custom{
   flex: 1;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
-
-  // background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(5px);
   padding: 20px;
-  // border: 1px solid rgba(255, 255, 255, 0.5); 
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .grow-custom{
   flex: 1;
-}
-
-.form-select {
-  white-space: nowrap; 
-  overflow: hidden;
-  text-overflow: ellipsis; 
-}
-
-.form-select option {
-  max-width: 250px; 
 }
 
 @media (min-width: 768px) {
