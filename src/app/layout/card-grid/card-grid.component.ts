@@ -26,12 +26,12 @@ export class CardGridComponent {
     this.movieDataService.movies$.subscribe((data) => {
       this.movies = data;
       this.resetCards();
-      console.log(this.movies);
+      // console.log(this.movies);
     });
 
     this.movieDataService.totalResults$.subscribe((total) => {
       this.totalResults = total;
-      console.log('Total Results:', this.totalResults);
+      // console.log('Total Results:', this.totalResults);
     });
 
     this.movieDataService.title$.subscribe((title) => {

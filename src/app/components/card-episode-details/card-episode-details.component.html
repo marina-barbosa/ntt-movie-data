@@ -1,0 +1,41 @@
+<section *ngIf="episode != undefined" [ngClass]="{'fade-in': !isVisible, 'fade-in-active': isVisible}" class="d-flex justify-content-center flex-column flex-lg-row rounded-md">
+  <div class="mx-auto mx-lg-0 mt-5 mt-lg-0">
+    <img [src]="episode.Poster !== 'N/A' ? episode.Poster : './poster-default.jpg'" class="img-custom rounded shadow">
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="mx-auto custom-container p-5 p-lg-0 d-flex flex-column h-100">
+      <div class="grow-custom rounded glass-custom">
+        <h1 class="fw-bold text-yellow text-shadow">{{ episode.Title }}</h1>
+        <p><strong>Ano:</strong> {{ episode.Year }} <span class="bg-yellow rounded px-2 mx-1">Avaliações do IMDb: {{ episode.imdbRating }}</span></p>
+        <p><strong>Lançado:</strong> {{ episode.Released }} | <strong>Duração:</strong> {{ episode.Runtime }}</p>
+        <p class="rounded px-2 bg-secondary text-white fit-content"><strong>Gênero:</strong> {{ episode.Genre }}</p>
+        <p><strong>Diretor:</strong> {{ episode.Director }}</p>
+        <p><strong>Atores:</strong> {{ episode.Actors }}</p>
+        <p><strong>Resumo:</strong> {{ episode.Plot }}</p>
+        <p class="fst-italic"><strong>Idioma:</strong> {{ episode.Language }} | <strong>País:</strong> {{ episode.Country }}</p>
+        <p><strong>Avaliações:</strong> {{ episode.Ratings[0]?.Value || 'N/A' }}</p>
+
+      </div>
+      <div class="mt-5 d-flex justify-content-center gap-5 align-items-center pb-4">
+        <app-button variant="primary" (click)="toggleFavorite()">{{ isFavorite ? 'Remover' : 'Favoritar' }} <i class="bi bi-heart-fill text-danger"></i></app-button>
+        <app-button routerLink="/details" variant="primary">Voltar</app-button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="episode == undefined" class="text-center">
+  <h2 class="fw-bold text-center mt-4 d-flex align-items-center px-3" style="max-width: 800px; margin: auto;">
+    Descubra, favorite e explore o universo dos episódios! Encontre os melhores títulos e crie sua coleção pessoal com um toque.
+  </h2>
+</section>
+
+<div class="toast toast-custom align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" #loginToast>
+  <div class="d-flex">
+    <div class="toast-body">
+      {{toastText}}
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+</div>

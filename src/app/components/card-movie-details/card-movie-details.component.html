@@ -1,7 +1,7 @@
 <section *ngIf="movie != undefined" [ngClass]="{'fade-in': !isVisible, 'fade-in-active': isVisible}"
   class=" d-flex justify-content-center flex-column flex-lg-row rounded-md">
   <div class="mx-auto mx-lg-0 mt-5 mt-lg-0">
-    <img [src]="movie.Poster" class="img-custom rounded shadow">
+    <img [src]="movie.Poster !== 'N/A' ? movie.Poster : './poster-default.jpg'" class="img-custom rounded shadow">
   </div>
 
   <div class="d-flex justify-content-center align-items-center">
@@ -10,13 +10,45 @@
         <h1 class="fw-bold text-yellow text-shadow">{{ movie.Title }}</h1>
         <p><strong>Diretor:</strong> {{ movie.Director }}</p>
         <p><strong>Ano:</strong> {{ movie.Year }} <span class="bg-yellow rounded px-2 mx-1">Avaliações do IMDb: {{
-            movie.imdbRating }}</span> <strong>Lançado:</strong> {{ movie.Released }}  </p>
+            movie.imdbRating }}</span> <strong>Lançado:</strong> {{ movie.Released }} </p>
         <p class="rounded px-2 bg-secondary text-white fit-content"><strong>Gênero:</strong> {{ translatedGenre ||
           movie.Genre }}</p>
         <p><strong>Atores:</strong> {{ movie.Actors }}</p>
         <p><strong>Enredo:</strong> {{ translatedPlot || movie.Plot }}</p>
-        <p class="fst-italic"><strong>Idioma:</strong> {{ translatedLanguage || movie.Language }} &nbsp;&nbsp;<span><strong>Runtime:</strong> {{ movie.Runtime }}</span></p>
+        <p class="fst-italic"><strong>Idioma:</strong> {{ translatedLanguage || movie.Language }}
+          &nbsp;&nbsp;<span><strong>Runtime:</strong> {{ movie.Runtime }}</span></p>
         <p><i class="bi bi-award-fill text-yellow fs-5 me-2"></i>{{ translatedAwards || movie.Awards }}</p>
+
+        <div *ngIf="movie.Type === 'series'" class="mb-3">
+          <div class="row align-items-center">
+            <div class="col-auto">
+              <label for="seasonSelect" class="form-label">Escolha a Temporada:</label>
+            </div>
+            <div class="col-auto">
+              <select id="seasonSelect" class="form-select" (change)="onSeasonChange($event)">
+                <option *ngFor="let season of seasons" [value]="season">Temporada {{ season }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="selectedSeason !== null" class="mb-3">
+          <div class="row align-items-center">
+            <div class="col-auto">
+              <label for="episodeSelect" class="form-label mb-0">Escolha o Episódio:</label>
+            </div>
+            <div class="col-auto">
+              <select id="episodeSelect" class="form-select" (change)="onEpisodeChange($event)" style="max-width: 250px;">
+                <option *ngFor="let episode of episodes" [value]="episode.Episode">
+                  {{ episode.Title }} (Avaliação: {{ episode.imdbRating }})
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+
+
       </div>
       <div class="mt-5 d-flex justify-content-center gap-5 align-items-center pb-4">
         <app-button variant="primary" (click)="toggleFavorite()">{{ isFavorite ?
