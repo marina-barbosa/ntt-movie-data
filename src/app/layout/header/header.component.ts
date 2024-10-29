@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ButtonComponent } from "../../components/button/button.component";
 import { SearchComponent } from "./search.component";
 import { RouterModule } from '@angular/router';
-import { SidebarComponent } from "../../containers/sidebar/sidebar.component";
+import { SidebarComponent } from "../sidebar/sidebar.component";
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { StarsComponent } from "../../components/stars/stars.component";
