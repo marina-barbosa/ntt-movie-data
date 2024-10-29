@@ -37,7 +37,11 @@ img {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, $color-dark-blue10 50%, $color-dark-blue40 55%, $color-dark-blue 70%);
+  background: linear-gradient(
+    to bottom, 
+    $color-dark-blue10 50%, 
+    $color-dark-blue40 55%, 
+    $color-dark-blue 70%);
   opacity: 1;
   transition: opacity 0.3s ease;
 

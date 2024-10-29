@@ -21,6 +21,7 @@ $color-white: #f6f8fd; // Branco para fundo e texto
 // Estilo global
 * {
   font-family: 'Noto Sans', sans-serif;
+  transition: all 0.3s ease-in-out;
 }
 
 .bg-custom {
@@ -31,17 +32,15 @@ $color-white: #f6f8fd; // Branco para fundo e texto
   flex: 1;
 }
 
-* {
-  transition: all 0.3s ease-in-out;
-}
+$transition-fast: 0.3s ease-in-out;
 
 .button, .btn, button, a, .link-custom {
-  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out; 
+  transition: background-color $transition-fast, transform $transition-fast;
 }
 
 .fade-in {
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity $transition-fast;
 }
 
 .fade-in-active {

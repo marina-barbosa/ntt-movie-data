@@ -1,19 +1,22 @@
+
+$transition-fast: 0.3s ease;
+$color-danger: tomato; 
+
 .favorite-item {
   position: relative;
+  &:hover .btn-remove {
+    opacity: 1; 
+  }
 }
 
 .btn-remove {
   opacity: 0;
   background: none;
   border: none;
-  color: red;
+  color: $color-danger;
   font-weight: bold;
   cursor: pointer;
-  transition: opacity 0.3s ease;
-}
-
-.favorite-item:hover .btn-remove {
-  opacity: 1; 
+  transition: opacity $transition-fast;
 }
 
 #favorite-title {
@@ -21,6 +24,5 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   flex: 1;
-  // padding-block: 5px;
 }
 
