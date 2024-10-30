@@ -101,10 +101,19 @@ Aqui está uma seção de **Próximas Funcionalidades** que você pode adicionar
 
 As seguintes melhorias estão planejadas para futuras versões do projeto:
 
-- **Melhoria na aparência da lista de favoritos:** Tornar a exibição dos itens favoritos mais atrativa.
-- **Adicionar tipo de item na lista de favoritos:** Exibir o tipo (filme, série, episodio) ao lado do título na lista de favoritos para facilitar a identificação.
-- **Botão de acesso ao trailer no card de detalhes:** Incluir um botão na página de detalhes que leva o usuário diretamente ao trailer do item.
-- **Nova página para visualização de favoritos detalhada:** Criar uma página dedicada para exibir os favoritos com mais informações, opções de filtros e organização personalizada.
+- [ ] **Melhoria na aparência da lista de favoritos:** Tornar a exibição dos itens favoritos mais atrativa.
+- [ ] **Adicionar tipo de item na lista de favoritos:** Exibir o tipo (filme, série, episodio) ao lado do título na lista de favoritos para facilitar a identificação.
+- [ ] **Botão de acesso ao trailer no card de detalhes:** Incluir um botão na página de detalhes que leva o usuário diretamente ao trailer do item.
+- [ ] **Nova página para visualização de favoritos detalhada:** Criar uma página dedicada para exibir os favoritos com mais informações, opções de filtros e organização personalizada.
+- [ ] **Adicionar comportamento para usuários logados**: Implementar funcionalidades específicas e ajustes de interface para usuários que estão autenticados.
+- [ ] **Melhorar o serviço de tradução de texto**: Refinar o serviço de tradução para garantir mais precisão e suporte a múltiplos idiomas.
+- [ ] **Revisão de acessibilidade**: Verificar e melhorar a acessibilidade para garantir uma experiência inclusiva para todos os usuários.
+- [ ] **Componentizar a lista de favoritos**: Dividir a lista de favoritos em um componente reutilizável para facilitar a manutenção e uso em diferentes partes da aplicação.
+- [ ] **Finalizar o componente `CardEpisode`**: Completar a implementação e ajustes de layout do card de episódios.
+- [ ] **Adicionar SEO**: Implementar otimizações de SEO para melhorar a visibilidade do projeto nos mecanismos de busca.
+- [ ] **Adicionar testes**: Criar testes unitários e de integração para melhorar a confiabilidade do projeto.
+- [ ] **Atualizar o README**: Melhorar e expandir a documentação do README para descrever melhor o projeto, funcionalidades e instruções de uso.
+
 
 ---
 
