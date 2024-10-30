@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OmdbService } from '../../services/api/omdb.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
