@@ -7,11 +7,12 @@ import { FavoriteService } from '../../services/favorite.service';
 import { TranslationService } from '../../services/translation.service';
 import { AuthService } from '../../services/auth.service';
 import { OmdbService } from '../../services/api/omdb.service';
+import { ToastComponent } from "../toast/toast.component";
 
 @Component({
   selector: 'app-card-movie-details',
   standalone: true,
-  imports: [ButtonComponent, RouterModule, CommonModule],
+  imports: [ButtonComponent, RouterModule, CommonModule, ToastComponent],
   templateUrl: './card-movie-details.component.html',
   styleUrl: './card-movie-details.component.scss'
 })
@@ -26,7 +27,7 @@ export class CardMovieDetailsComponent implements OnInit {
   translatedGenre: string | undefined;
   translatedLanguage: string | undefined;
   isFavorite: boolean = false;
-  @ViewChild('loginToast', { static: false }) loginToast!: ElementRef;
+  @ViewChild(ToastComponent) toast!: ToastComponent;
   toastText: string = '';
   seasons: any[] = [];
   selectedSeason: number | null = null;
@@ -62,13 +63,7 @@ export class CardMovieDetailsComponent implements OnInit {
     if (this.authService.isLoggedIn()) {
       this.isFavorite ? this.removeFromFavorites() : this.addToFavorites();
     } else {
-      this.toastText = 'Por favor, faca o login para adicionar favoritos';
-      this.renderer.addClass(this.loginToast.nativeElement, 'show');
-
-      setTimeout(() => {
-        this.renderer.removeClass(this.loginToast.nativeElement, 'show');
-        this.toastText = '';
-      }, 4000);
+      this.toast.go('Por favor, faça login para adicionar aos favoritos.', 'danger');
     }
   }
 
@@ -130,15 +125,8 @@ export class CardMovieDetailsComponent implements OnInit {
           this.translatedLanguage = response.responseData.translatedText;
         },
         error: (error) => {
-          console.error('Erro ao traduzir', error);
-
-          this.toastText = 'ERRO 429: Desculpe, ocorreu um erro ao traduzir as informacoes. Tente novamente mais tarde.';
-          this.renderer.addClass(this.loginToast.nativeElement, 'show');
-
-          setTimeout(() => {
-            this.renderer.removeClass(this.loginToast.nativeElement, 'show');
-            this.toastText = '';
-          }, 4000);
+          console.info(error);
+          this.toast.go('ERRO 429: Desculpe, ocorreu um erro ao traduzir as informacoes. Tente novamente mais tarde.', 'danger');
         }
       });
     }

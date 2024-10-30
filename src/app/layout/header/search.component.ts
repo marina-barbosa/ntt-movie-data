@@ -24,36 +24,38 @@ export class SearchComponent {
 
   searchMovie(): void {
     const trimmedTitle = this.movieTitle.trim();
-    if (trimmedTitle) {
-      this.omdbService.searchMovie(trimmedTitle).subscribe({
-        next: (data) => {
-          if (data?.Response === 'True') {
-            //console.log(data);
-            this.movieDataService.setMovies(data.Search);
-            this.movieDataService.setTotalResults(parseInt(data.totalResults, 10));
-            this.movieDataService.setTitle(trimmedTitle);
-            this.errorMessage = '';
-            this.showAlert = false;
-            if (this.router.url !== '/') {
-              this.router.navigate(['/']);
-            }
-          } else {
-            this.movieDataService.setMovies([]);
-            this.errorMessage = 'Nenhum filme encontrado.';
-            this.showAlert = true;
-            return
-          }
-        },
-        error: () => {
-          this.movieDataService.setMovies([]);
-          this.errorMessage = 'Ocorreu um erro ao buscar o filme.';
-          this.showAlert = true;
-        },
-      });
-    } else {
-      this.errorMessage = 'O campo título do filme esta vazio.';
-      this.showAlert = true;
-      this.movieDataService.setMovies([]);
+    if (!trimmedTitle) {
+      this.setError('O campo título do filme está vazio.');
+      return;
+    }
+
+    this.omdbService.searchMovie(trimmedTitle).subscribe({
+      next: (data) => {
+        if (data?.Response === 'True') {
+          this.handleSuccessfulSearch(data, trimmedTitle);
+        } else {
+          this.setError('Nenhum filme encontrado.');
+        }
+      },
+      error: () => this.setError('Ocorreu um erro ao buscar o filme.'),
+    });
+  }
+
+  private setError(message: string): void {
+    this.errorMessage = message;
+    this.showAlert = true;
+    this.movieDataService.setMovies([]);
+  }
+
+  private handleSuccessfulSearch(data: any, trimmedTitle: string): void {
+    this.movieDataService.setMovies(data.Search);
+    this.movieDataService.setTotalResults(parseInt(data.totalResults, 10));
+    this.movieDataService.setTitle(trimmedTitle);
+    this.errorMessage = '';
+    this.showAlert = false;
+    if (this.router.url !== '/') {
+      this.router.navigate(['/']);
     }
   }
+
 }

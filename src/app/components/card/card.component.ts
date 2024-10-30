@@ -6,18 +6,19 @@ import { MovieDataService } from '../../services/movie-data.service';
 import { FavoriteService } from '../../services/favorite.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { ToastComponent } from "../toast/toast.component";
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [ButtonComponent, RouterModule, CommonModule],
+  imports: [ButtonComponent, RouterModule, CommonModule, ToastComponent],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss'
 })
 export class CardComponent implements OnInit {
   @Input() movie: any;
   isFavorite: boolean = false;
-  @ViewChild('loginToast', { static: false }) loginToast!: ElementRef;
+  @ViewChild(ToastComponent) toast!: ToastComponent;
 
   constructor(private omdbService: OmdbService, private router: Router, private movieDataService: MovieDataService, private favoriteService: FavoriteService, private authService: AuthService, private renderer: Renderer2) { }
 
@@ -29,11 +30,7 @@ export class CardComponent implements OnInit {
     if (this.authService.isLoggedIn()) {
       this.isFavorite ? this.removeFromFavorites() : this.addToFavorites();
     } else {
-      this.renderer.addClass(this.loginToast.nativeElement, 'show');
-
-      setTimeout(() => {
-        this.renderer.removeClass(this.loginToast.nativeElement, 'show');
-      }, 4000);
+      this.toast.go('Por favor, faça login para adicionar aos favoritos.', 'danger');
     }
   }
 

@@ -4,6 +4,12 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, setDoc, arrayUnion, getDoc, arrayRemove } from 'firebase/firestore';
 import { environment } from '../../environments/environment.prod';
 
+export interface Movie {
+  id: string;
+  title: string;
+  year: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,39 +17,27 @@ export class FavoriteService {
   private db = getFirestore(initializeApp(environment.firebaseConfig));
   private auth = getAuth();
 
-  async addFavorite(movie: { id: string, title: string, year: string }) {
-    const user = this.auth.currentUser;
-    if (user) {
-      const userDoc = doc(this.db, 'users', user.uid);
-      const favorites = await this.getFavorites();
+  public async addFavorite(movie: Movie) {
+    const userDoc = await this.getUserDoc();
+    if (!userDoc) {
+      return;
+    }
 
-      const movieExists = this.checkExistsInFavorites(favorites, movie.id);
+    const favorites = await this.getFavorites();
 
-      if (!movieExists) {
-        await setDoc(userDoc, {
-          favorites: arrayUnion(movie)
-        }, { merge: true });
-        console.log("Filme adicionado aos favoritos:", movie);
-
-        const localFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-        localFavorites.push(movie);
-        localStorage.setItem('favorites', JSON.stringify(localFavorites));
-      } else {
-        console.log("Filme já está nos favoritos:", movie);
-      }
-    } else {
-      console.error('Usuário não está autenticado.');
+    if (!this.checkExistsInFavorites(favorites, movie.id)) {
+      await setDoc(userDoc, { favorites: arrayUnion(movie) }, { merge: true });
+      this.updateLocalStorage(movie, true);
     }
   }
 
-  checkExistsInFavorites(favorites: { id: string }[], movieId: string): boolean {
+  public checkExistsInFavorites(favorites: { id: string }[], movieId: string): boolean {
     return favorites.some((fav) => fav.id === movieId);
   }
 
-  async getFavorites(): Promise<{ id: string, title: string, year: string }[]> {
-    const user = this.auth.currentUser;
-    if (user) {
-      const userDoc = doc(this.db, 'users', user.uid);
+  public async getFavorites(): Promise<Movie[]> {
+    const userDoc = await this.getUserDoc();
+    if (userDoc) {
       const docSnap = await getDoc(userDoc);
       if (docSnap.exists()) {
         const data = docSnap.data();
@@ -53,12 +47,12 @@ export class FavoriteService {
     return [];
   }
 
-  async loadFavoritesToLocalStorage() {
+  public async loadFavoritesToLocalStorage() {
     const favorites = await this.getFavorites();
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }
 
-  async getFavoritesFromLocalStorageOrFirebase(): Promise<{ id: string, title: string, year: string }[]> {
+  public async getFavoritesFromLocalStorageOrFirebase(): Promise<Movie[]> {
     const localFavorites = localStorage.getItem('favorites');
 
     if (localFavorites) {
@@ -70,29 +64,43 @@ export class FavoriteService {
     }
   }
 
-  async removeFavorite(movieId: string) {
-    const user = this.auth.currentUser;
-    if (user) {
-      const userDoc = doc(this.db, 'users', user.uid);
-      const localFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-
-      const movieToRemove = localFavorites.find((movie: { id: string }) => movie.id === movieId);
-  
-      if (movieToRemove) {
-
-        await setDoc(userDoc, {
-          favorites: arrayRemove(movieToRemove)
-        }, { merge: true });
-        console.log("movie removed from favorites:", movieId);
-
-        const updatedFavorites = localFavorites.filter((movie: { id: string }) => movie.id !== movieId);
-        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-      } else {
-        console.error('Filme não encontrado nos favoritos locais.');
-      }
-    } else {
-      console.error('Usuário não está autenticado.');
+  public async removeFavorite(movieId: string) {
+    const userDoc = await this.getUserDoc();
+    if (!userDoc) {
+      return;
     }
+
+    const localFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+    const movieToRemove = localFavorites.find(
+      (movie: { id: string }) => movie.id === movieId
+    );
+
+    if (movieToRemove) {
+
+      await setDoc(userDoc, {
+        favorites: arrayRemove(movieToRemove)
+      }, { merge: true });
+
+      const updatedFavorites = localFavorites.filter((movie: { id: string }) => movie.id !== movieId);
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    }
+  }
+
+  private async getUserDoc() {
+    const user = this.auth.currentUser;
+    return user ? doc(this.db, 'users', user.uid) : null;
+  }
+
+  private updateLocalStorage(movie: Movie, add: boolean) {
+    const localFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    if (add) {
+      localFavorites.push(movie);
+    } else {
+      const updatedFavorites = localFavorites.filter((m: Movie) => m.id !== movie.id);
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    }
+    localStorage.setItem('favorites', JSON.stringify(localFavorites));
   }
 
 
