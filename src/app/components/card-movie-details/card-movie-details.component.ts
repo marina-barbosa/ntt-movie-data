@@ -1,32 +1,30 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ButtonComponent } from "../button/button.component";
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MovieDataService } from '../../services/movie-data.service';
 import { FavoriteService } from '../../services/favorite.service';
-import { TranslationService } from '../../services/translation.service';
 import { AuthService } from '../../services/auth.service';
 import { OmdbService } from '../../services/api/omdb.service';
+import { ToastComponent } from "../toast/toast.component";
+import { BaseCardComponent } from '../base-card/base-card.component';
+import { MovieDataService } from '../../services/movie-data.service';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'app-card-movie-details',
   standalone: true,
-  imports: [ButtonComponent, RouterModule, CommonModule],
+  imports: [ButtonComponent, RouterModule, CommonModule, ToastComponent],
   templateUrl: './card-movie-details.component.html',
   styleUrl: './card-movie-details.component.scss'
 })
 
-
-
-export class CardMovieDetailsComponent implements OnInit {
-  movie: any;
+export class CardMovieDetailsComponent extends BaseCardComponent implements OnInit {
   isVisible: boolean = false;
   translatedPlot: string | undefined;
   translatedAwards: string | undefined;
   translatedGenre: string | undefined;
   translatedLanguage: string | undefined;
-  isFavorite: boolean = false;
-  @ViewChild('loginToast', { static: false }) loginToast!: ElementRef;
+  @ViewChild(ToastComponent) toast!: ToastComponent;
   toastText: string = '';
   seasons: any[] = [];
   selectedSeason: number | null = null;
@@ -34,13 +32,14 @@ export class CardMovieDetailsComponent implements OnInit {
 
   constructor(
     private movieDataService: MovieDataService,
-    private favoriteService: FavoriteService,
+    favoriteService: FavoriteService,
     private translationService: TranslationService,
-    private authService: AuthService,
-    private renderer: Renderer2,
+    authService: AuthService,
     private omdbService: OmdbService,
     private router: Router
-  ) { }
+  ) {
+    super(favoriteService, authService);
+  }
 
   ngOnInit() {
     this.checkIfFavorite();
@@ -51,59 +50,17 @@ export class CardMovieDetailsComponent implements OnInit {
 
     this.movieDataService.movieDetails$.subscribe((movieDetails) => {
       this.movie = movieDetails;
-      if (this.movie != undefined) {
+      if (this.movie) {
         this.loadSeasons();
         this.translateText();
       }
     });
   }
 
-  toggleFavorite() {
-    if (this.authService.isLoggedIn()) {
-      this.isFavorite ? this.removeFromFavorites() : this.addToFavorites();
-    } else {
-      this.toastText = 'Por favor, faca o login para adicionar favoritos';
-      this.renderer.addClass(this.loginToast.nativeElement, 'show');
-
-      setTimeout(() => {
-        this.renderer.removeClass(this.loginToast.nativeElement, 'show');
-        this.toastText = '';
-      }, 4000);
-    }
+  protected showLoginToast(): void {
+    this.toast.go('Por favor, faça login para adicionar aos favoritos.', 'danger');
   }
 
-  private async checkIfFavorite() {
-    const favorites = await this.favoriteService.getFavorites();
-    this.isFavorite = this.favoriteService.checkExistsInFavorites(favorites, this.movie.imdbID);
-  }
-
-  async addToFavorites() {
-    if (this.movie) {
-      try {
-        await this.favoriteService.addFavorite({
-          id: this.movie.imdbID,
-          title: this.movie.Title,
-          year: this.movie.Year
-        });
-        console.log('Filme adicionado aos favoritos:', this.movie.Title);
-        this.isFavorite = true;
-      } catch (error) {
-        console.error('Erro ao adicionar aos favoritos:', error);
-      }
-    }
-  }
-
-  async removeFromFavorites() {
-    if (this.movie) {
-      try {
-        await this.favoriteService.removeFavorite(this.movie.imdbID);
-        console.log('Filme removido dos favoritos:', this.movie.Title);
-        this.isFavorite = false;
-      } catch (error) {
-        console.error('Erro ao remover dos favoritos:', error);
-      }
-    }
-  }
 
   translateText() {
     if (this.movie) {
@@ -130,15 +87,8 @@ export class CardMovieDetailsComponent implements OnInit {
           this.translatedLanguage = response.responseData.translatedText;
         },
         error: (error) => {
-          console.error('Erro ao traduzir', error);
-
-          this.toastText = 'ERRO 429: Desculpe, ocorreu um erro ao traduzir as informacoes. Tente novamente mais tarde.';
-          this.renderer.addClass(this.loginToast.nativeElement, 'show');
-
-          setTimeout(() => {
-            this.renderer.removeClass(this.loginToast.nativeElement, 'show');
-            this.toastText = '';
-          }, 4000);
+          console.info(error);
+          this.toast.go('ERRO 429: Desculpe, ocorreu um erro ao traduzir as informacoes. Tente novamente mais tarde.', 'danger');
         }
       });
     }

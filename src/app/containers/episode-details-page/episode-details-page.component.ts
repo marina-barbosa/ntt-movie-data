@@ -4,11 +4,12 @@ import { CardEpisodeDetailsComponent } from "../../components/card-episode-detai
 import { FooterComponent } from "../../layout/footer/footer.component";
 import { ActivatedRoute } from '@angular/router';
 import { OmdbService } from '../../services/api/omdb.service';
+import { LayoutComponent } from "../../layout/layout/layout.component";
 
 @Component({
   selector: 'app-episode-details-page',
   standalone: true,
-  imports: [HeaderComponent, CardEpisodeDetailsComponent, FooterComponent],
+  imports: [HeaderComponent, CardEpisodeDetailsComponent, FooterComponent, LayoutComponent],
   templateUrl: './episode-details-page.component.html',
   styleUrl: './episode-details-page.component.scss'
 })

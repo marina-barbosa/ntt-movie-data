@@ -3,16 +3,10 @@ svg {
   position: absolute;
   top: 55%;
   left: 50%;
-  transform: translate(-50% );
-}
+  transform: translate(-50%, -25%);
 
-
-
-@media only screen and (max-height: 932px) {
-
-  svg{
+  @media only screen and (max-height: 932px), only screen and (min-height: 2155px) {
     position: static;
     transform: none;
-    max-width: 50vh;
   }
 }

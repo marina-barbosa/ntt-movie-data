@@ -26,12 +26,10 @@ export class CardGridComponent {
     this.movieDataService.movies$.subscribe((data) => {
       this.movies = data;
       this.resetCards();
-      // console.log(this.movies);
     });
 
     this.movieDataService.totalResults$.subscribe((total) => {
       this.totalResults = total;
-      // console.log('Total Results:', this.totalResults);
     });
 
     this.movieDataService.title$.subscribe((title) => {
@@ -54,7 +52,6 @@ export class CardGridComponent {
     this.visibleCards = Array(this.movies.length).fill(false);
 
     this.movies.forEach((_, index) => {
-      // const delay = index === 0 ? 3000 : 300;
       const delay = 200;
       setTimeout(() => {
         this.visibleCards[index] = true;
@@ -68,7 +65,6 @@ export class CardGridComponent {
         if (data.Response === 'True') {
           this.movieDataService.setMovies(data.Search);
           this.movieDataService.setTotalResults(parseInt(data.totalResults, 10));
-          // console.log(data);
         } else {
           this.movieDataService.setMovies([]);
           this.movieDataService.setTotalResults(0);
